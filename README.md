@@ -1,4 +1,4 @@
-# stored-procedures
+# STORED PROCEDURES
 
 ## Aula invertida sobre Stored Procedures para o 2º semestre de Desenvolvimento de Sistemas do SENAI.
 
