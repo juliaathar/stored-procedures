@@ -1,16 +1,20 @@
+-- Cria a base de dados
 CREATE DATABASE Teste;
+-- Usa a base
 USE Teste;
-
+-- Cria tabela
 CREATE TABLE Pessoas
 (
+-- Cria os atributos
 	IdPessoa INT PRIMARY KEY IDENTITY,
 	Nome VARCHAR(50),
 	Pago VARCHAR(50)
 )
-
+-- Insere valores
 INSERT INTO Pessoas(Nome, Pago)
 VALUES('Jose', 'Sim'), ('Maria', 'Sim'), ('Joao', 'Não'), ('Caua', 'Não'), ('Clara', 'Sim')
 
+-- Cria a procedure
 USE Teste
 GO
 CREATE PROCEDURE Busca
@@ -18,7 +22,7 @@ AS
 SELECT Nome, Pago
 FROM Pessoas
 WHERE Pago = 'Sim'
-
+-- Executa a procedure
 EXEC Busca;
 
 --   Cria a tabela de CLIENTES que contém os dados pessoais dos clientes, incluindo nome, idade, endereço e salário, etc.,
@@ -82,4 +86,34 @@ BEGIN
    WHERE IDADE = @IdadeCliente
 END
 
-EXEC ConsultaIdadeCliente @IdadeCliente = '30'
+EXEC ConsultaIdadeCliente @IdadeCliente = 32
+
+
+
+
+CREATE PROCEDURE ConsultaIdadeCliente2 
+   @IdadeComparacao INT,
+   @OperadorComparacao CHAR(1)
+AS
+BEGIN
+   IF @OperadorComparacao = '>'
+      SELECT * FROM CLIENTES WHERE IDADE > @IdadeComparacao
+   ELSE IF @OperadorComparacao = '<'
+      SELECT * FROM CLIENTES WHERE IDADE < @IdadeComparacao
+   ELSE IF @OperadorComparacao = '='
+      SELECT * FROM CLIENTES WHERE IDADE = @IdadeComparacao
+   ELSE
+      PRINT 'Operador de comparação inválido'
+END
+
+-- Para clientes com idade maior que 30
+EXEC ConsultaIdadeCliente2 @IdadeComparacao = 30, @OperadorComparacao = '>'
+
+-- Para clientes com idade menor que 30
+EXEC ConsultaIdadeCliente2 @IdadeComparacao = 30, @OperadorComparacao = '<'
+
+-- Para clientes com idade igual a 30
+EXEC ConsultaIdadeCliente2 @IdadeComparacao = 30, @OperadorComparacao = '='
+
+EXEC ConsultaIdadeCliente2 @IdadeComparacao = 30, @OperadorComparacao = '/'
+
